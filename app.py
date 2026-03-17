@@ -444,6 +444,17 @@ with st.sidebar:
             )
             st.info("💡 O'zbek tili uchun `medium` yoki `large-v2` tavsiya etiladi.")
 
+        # --- Test Connection ---
+        st.markdown("---")
+        if st.button("🔌 API Bog'lanishni Tekshirish", use_container_width=True):
+            from ai_labs_api import ElevenLabsClient
+            client = ElevenLabsClient(api_key=st.session_state.elevenlabs_key)
+            with st.spinner("Tekshirilmoqda..."):
+                if client.test_connection():
+                    st.success("✅ ElevenLabs: Aloqa muvaffaqiyatli!")
+                else:
+                    st.error("❌ ElevenLabs: Kalit noto'g'ri yoki internet yo'q.")
+
     st.markdown("---")
 
     # --- Media Yuklash ---
