@@ -46,6 +46,13 @@ def extract_audio(
         from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_audio
         import subprocess
 
+        # Check if ffmpeg is available
+        try:
+            subprocess.run(["ffmpeg", "-version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        except FileNotFoundError:
+            print("[VideoProcessor] ERROR: ffmpeg is not installed on the system!")
+            return None
+
         # Video yoki faqat audio fayl ekanligini aniqlash
         ext = os.path.splitext(video_path)[1].lower()
         if ext in [".mp3", ".wav", ".flac", ".ogg", ".m4a"]:
@@ -57,9 +64,12 @@ def extract_audio(
             if format == "mp3":
                 cmd.extend(["-codec:a", "libmp3lame", "-b:a", "64k"])
             cmd.append(audio_path)
-            subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            if result.returncode != 0:
+                print(f"[VideoProcessor] Ffmpeg audio convert xatosi: {result.stderr.decode('utf-8', errors='ignore')}")
+                return None
         else:
-            # Video fayldan audio ajratish (to'g'ridan-to'g'ri ffmpeg chaqiruvi - juda tez)
+            # Video fayldan audio ajratish
             cmd = [
                 "ffmpeg", "-y", "-i", video_path,
                 "-vn", "-ac", "1", "-ar", str(sample_rate)
@@ -68,9 +78,9 @@ def extract_audio(
                 cmd.extend(["-codec:a", "libmp3lame", "-b:a", "64k"])
             cmd.append(audio_path)
             
-            result = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+            result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             if result.returncode != 0:
-                print(f"[VideoProcessor] Ffmpeg xatosi: {result.stderr.decode('utf-8', errors='ignore')}")
+                print(f"[VideoProcessor] Ffmpeg extraction xatosi: {result.stderr.decode('utf-8', errors='ignore')}")
                 return None
 
         print(f"[VideoProcessor] Audio ajratildi (Tezkor STT rejim): {audio_path}")
