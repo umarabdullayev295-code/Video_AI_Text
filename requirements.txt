@@ -1,18 +1,12 @@
-# Core Framework
+--extra-index-url https://download.pytorch.org/whl/cpu
 streamlit
-
-# Multimedia Processing
 moviepy
 faster-whisper
 torch
-numpy
-pandas
-
-# AI & Search Engines
 sentence-transformers
 faiss-cpu
-elevenlabs
+numpy
+pandas
 httpx
-
-# Utilities
+elevenlabs
 python-dotenv
