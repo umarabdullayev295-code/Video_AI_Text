@@ -10,6 +10,10 @@ import os
 import tempfile
 import time
 from pathlib import Path
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # --- Ilovani Sozlash ---
 st.set_page_config(

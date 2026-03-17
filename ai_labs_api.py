@@ -10,10 +10,13 @@ import tempfile
 from typing import List, Dict, Optional
 from elevenlabs.client import ElevenLabs
 import httpx
+from dotenv import load_dotenv
 
+# Load environment variables
+load_dotenv()
 
 # ─── ElevenLabs ───
-ELEVENLABS_API_KEY = os.environ.get("ELEVENLABS_API_KEY", "sk_4334f8d4a5a00b6cc18e08b4d68d726297da5b224871ac79")
+ELEVENLABS_API_KEY = os.environ.get("ELEVENLABS_API_KEY")
 ELEVENLABS_STT_URL = "https://api.elevenlabs.io/v1/speech-to-text"
 
 
