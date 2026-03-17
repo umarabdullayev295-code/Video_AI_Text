@@ -1,12 +1,18 @@
---extra-index-url https://download.pytorch.org/whl/cpu
+# Core Framework
 streamlit
+
+# Multimedia Processing
 moviepy
 faster-whisper
-sentence-transformers
-faiss-cpu
 torch
-python-dotenv
 numpy
 pandas
-httpx
+
+# AI & Search Engines
+sentence-transformers
+faiss-cpu
 elevenlabs
+httpx
+
+# Utilities
+python-dotenv
